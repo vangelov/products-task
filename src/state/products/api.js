@@ -1,4 +1,4 @@
-import { delay } '../../utils';
+import { delay } from '../../utils/delay';
 
 const PRODUCTS = [
   { name: 'p1', price: 20, currency: 'USD' },

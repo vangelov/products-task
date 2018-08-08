@@ -1,4 +1,4 @@
-import { delay } '../../utils';
+import { delay } from '../../utils/delay';
 
 const PERMISSIONS = [
   'CREATE',

@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   root: {
@@ -20,29 +19,30 @@ const styles = theme => ({
   },
 });
 
-export const ProductsListToolbar = ({ classes, onAdd }) => {
+export const ProductsListToolbar = ({ classes, onAdd, canAdd }) => {
   return (
     <Toolbar
       className={classes.root}
     >
       <div className={classes.title}>
-        <Typography variant="title" id="tableTitle">
+        <Typography variant="title">
           Products
         </Typography>
       </div>
+
       <div className={classes.spacer} />
-      <Tooltip title="Add Product">
-        <IconButton onClick={onAdd}>
-          <AddIcon />
-        </IconButton>
-      </Tooltip>
+
+      {canAdd && <IconButton onClick={onAdd}>
+        <AddIcon />
+      </IconButton>}
     </Toolbar>
   );
 };
 
 ProductsListToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
-  onAdd: PropTypes.func.isRequired
+  onAdd: PropTypes.func.isRequired,
+  canAdd: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(ProductsListToolbar);

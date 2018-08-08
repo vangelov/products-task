@@ -2,7 +2,7 @@ import * as actions from './actions';
 
 const initialState = {
   list: [],
-  loading: false,
+  isGetting: false,
   error: null
 };
 
@@ -11,17 +11,23 @@ export default (state = initialState, action) => {
     case actions.PERMISSIONS_GET:
       return {
         ...state,
-        loading: true
+        isGetting: true
       };
 
     case actions.PERMISSIONS_GET_SUCCESS:
       return {
         ...state,
-        loading: false,
-        error: null,
-        list: action.products
+        isGetting: false,
+        list: action.permissions
       };
-      
+
+    case actions.PERMISSIONS_GET_ERROR:
+      return {
+        ...state,
+        isGetting: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }

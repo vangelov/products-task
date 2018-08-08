@@ -5,14 +5,17 @@ import TableCell from '@material-ui/core/TableCell';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 
-const ProductsListRow = ({ id, name, calories, fat }) => {
+const ProductsListRow = ({ product }) => {
+  const { name, price, currency } = product;
+  
   return (
-    <TableRow key={id}>
+    <TableRow>
       <TableCell>
         {name}
       </TableCell>
-      <TableCell numeric>{calories}</TableCell>
-      <TableCell numeric>{fat}</TableCell>
+      <TableCell numeric>{price}</TableCell>
+      <TableCell numeric>{currency}</TableCell>
+
       <TableCell numeric padding="checkbox">
         <IconButton onClick={this.handleClick}>
           <MoreVertIcon />

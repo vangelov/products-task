@@ -26,11 +26,13 @@ const currencies = [
 
 export class ProductAddOrUpdate extends React.Component {
 
-  state = {
-    name: null,
-    price: null,
-    currency: null
+  initialState = {
+    name: '',
+    price: '',
+    currency: ''
   };
+
+  state = this.initialState;
 
   handleTextFieldChange = name => event => {
     this.setState({
@@ -38,13 +40,18 @@ export class ProductAddOrUpdate extends React.Component {
     });
   };
 
+  close = () => {
+    const { onClose } = this.props;
+    this.setState(this.initialState, onClose);
+  }
+
   render() {
-    const { open, onClose } = this.props;
+    const { open } = this.props;
 
     return (
       <Dialog
         open={open}
-        onClose={onClose}
+        onClose={this.close}
         >
         <DialogTitle>Add Product</DialogTitle>
 
@@ -54,7 +61,6 @@ export class ProductAddOrUpdate extends React.Component {
             value={this.state.name}
             autoFocus
             margin="dense"
-            id="name"
             label="Name"
             type="string"
             fullWidth
@@ -64,7 +70,6 @@ export class ProductAddOrUpdate extends React.Component {
             onChange={this.handleTextFieldChange('price')}
             value={this.state.price}
             margin="dense"
-            id="price"
             label="Price"
             type="number"
             fullWidth
@@ -73,7 +78,6 @@ export class ProductAddOrUpdate extends React.Component {
           <TextField
             onChange={this.handleTextFieldChange('currency')}
             value={this.state.currency}
-            id="select-currency"
             select
             fullWidth
             label="Currency"
@@ -88,11 +92,11 @@ export class ProductAddOrUpdate extends React.Component {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={onClose} color="secondary">
+          <Button onClick={this.close} color="secondary">
             Cancel
           </Button>
 
-          <Button onClick={onClose} color="primary">
+          <Button onClick={this.close} color="primary">
             Add
           </Button>
         </DialogActions>
@@ -102,8 +106,8 @@ export class ProductAddOrUpdate extends React.Component {
 };
 
 ProductAddOrUpdate.propTypes = {
-  onAdd: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default ProductAddOrUpdate;

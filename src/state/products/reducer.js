@@ -2,9 +2,9 @@ import * as actions from './actions';
 
 const initialState = {
   list: [],
-  getting: false,
-  adding: false,
-  deleting: false,
+  isGetting: false,
+  isAdding: false,
+  isDeleting: false,
   error: null
 };
 
@@ -13,39 +13,39 @@ export default (state = initialState, action) => {
     case actions.PRODUCTS_GET:
       return {
         ...state,
-        getting: true
+        isGetting: true
       };
 
     case actions.PRODUCTS_GET_SUCCESS:
       return {
         ...state,
-        getting: false,
+        isGetting: false,
         list: action.products
       };
 
     case actions.PRODUCTS_GET_ERROR:
       return {
         ...state,
-        getting: false,
+        isGetting: false,
         error: action.error,
       };
 
     case actions.PRODUCTS_ADD:
       return {
         ...state,
-        adding: false,
+        isAdding: false,
       };
 
     case actions.PRODUCTS_ADD_SUCCESS:
       return {
         ...state,
-        adding: false,
+        isAdding: false,
       };
 
     case actions.PRODUCTS_ADD_ERROR:
       return {
         ...state,
-        adding: false,
+        isAdding: false,
         error: action.error,
       };
 
