@@ -1,0 +1,4 @@
+export const PERMISSIONS_GET = 'PERMISSIONS_GET';
+export const PERMISSIONS_GET_SUCCESS = 'PERMISSIONS_GET_SUCCESS';
+export const PERMISSIONS_GET_ERROR = 'PERMISSIONS_GET_ERROR';
+export const permissionsGet = () => ({ type: PERMISSIONS_GET });
