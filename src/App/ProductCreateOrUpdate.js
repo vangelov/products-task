@@ -29,16 +29,20 @@ const currencies = [
 ];
 
 export class ProductCreateOrUpdate extends React.Component {
-    initialState = {
-        name: "",
-        nameValid: true,
-        price: "",
-        priceValid: true,
-        currency: "",
-        currencyValid: true
-    };
+    constructor(props) {
+        super(props);
 
-    state = this.initialState;
+        const { productForUpdate } = props;
+
+        this.state = {
+            name: productForUpdate ? productForUpdate.name : "",
+            nameValid: true,
+            price: productForUpdate ? productForUpdate.price : "",
+            priceValid: true,
+            currency: productForUpdate ? productForUpdate.currency : "",
+            currencyValid: true
+        };
+    }
 
     handleTextFieldChange = name => event => {
         this.setState({
@@ -47,15 +51,10 @@ export class ProductCreateOrUpdate extends React.Component {
     };
 
     close = () => {
-        this.setState(this.initialState, this.props.onClose);
+        this.props.onClose();
     };
 
-    onExited = () => {
-        // We need to reset the state as this component is not unmounted on close
-        this.setState(this.initialState);
-    };
-
-    add = () => {
+    validate = onValid => {
         const { name, price, currency } = this.state;
         const nameValid = !!name;
         const priceValid = !!price;
@@ -64,18 +63,30 @@ export class ProductCreateOrUpdate extends React.Component {
         this.setState({ nameValid, priceValid, currencyValid }, () => {
             if (nameValid && priceValid && currencyValid) {
                 const product = { name, price, currency };
-                this.props.onCreate(product);
+                onValid(product);
             }
         });
     };
 
+    add = () => {
+        this.validate(newProduct => this.props.onCreate(newProduct));
+    };
+
+    update = () => {
+        this.validate(updatedProduct =>
+            this.props.onUpdate(this.props.productForUpdate.id, updatedProduct)
+        );
+    };
+
     render() {
-        const { open, isCreating } = this.props;
+        const { open, isCreating, isUpdating, productForUpdate } = this.props;
         const { nameValid, priceValid, currencyValid } = this.state;
 
         return (
-            <Dialog open={open} onClose={this.close} onExited={this.onExited}>
-                <DialogTitle>Add Product</DialogTitle>
+            <Dialog open={open} onClose={this.close}>
+                <DialogTitle>
+                    {productForUpdate ? "Update Product" : "Add Product"}
+                </DialogTitle>
 
                 <DialogContent>
                     <TextField
@@ -85,7 +96,7 @@ export class ProductCreateOrUpdate extends React.Component {
                         disabled={isCreating}
                         onChange={this.handleTextFieldChange("name")}
                         value={this.state.name}
-                        autoFocus
+                        autoFocus={!productForUpdate}
                         margin="dense"
                         label="Name"
                         type="string"
@@ -130,13 +141,23 @@ export class ProductCreateOrUpdate extends React.Component {
                         Cancel
                     </Button>
 
-                    <Button
-                        onClick={this.add}
-                        disabled={isCreating}
-                        color="primary"
-                    >
-                        {isCreating ? "Addding..." : "Add"}
-                    </Button>
+                    {productForUpdate ? (
+                        <Button
+                            onClick={this.update}
+                            disabled={isUpdating}
+                            color="primary"
+                        >
+                            {isUpdating ? "Updating..." : "Update"}
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={this.add}
+                            disabled={isCreating}
+                            color="primary"
+                        >
+                            {isCreating ? "Addding..." : "Add"}
+                        </Button>
+                    )}
                 </DialogActions>
             </Dialog>
         );
@@ -146,20 +167,35 @@ export class ProductCreateOrUpdate extends React.Component {
 ProductCreateOrUpdate.propTypes = {
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    productForUpdate: PropTypes.object,
     open: PropTypes.bool.isRequired,
-    isCreating: PropTypes.bool.isRequired
+    isCreating: PropTypes.bool.isRequired,
+    isUpdating: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
     return {
-        isCreating: selectors.productsIsCreating(state)
+        isCreating: selectors.productsIsCreating(state),
+        isUpdating: selectors.productsIsUpdating(state)
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onCreate: product => {
-            dispatch(actions.productsCreateAndGet(product, ownProps.onClose));
+        onCreate: newProduct => {
+            dispatch(
+                actions.productsCreateAndGet(newProduct, ownProps.onClose)
+            );
+        },
+        onUpdate: (productId, updatedProduct) => {
+            dispatch(
+                actions.productsUpdateAndGet(
+                    productId,
+                    updatedProduct,
+                    ownProps.onClose
+                )
+            );
         }
     };
 };

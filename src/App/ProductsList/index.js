@@ -32,7 +32,16 @@ class ProductsList extends React.Component {
     }
 
     render() {
-        const { classes, onAdd, isGetting, products, canAdd } = this.props;
+        const {
+            classes,
+            onAdd,
+            onEdit,
+            isGetting,
+            products,
+            canAdd,
+            canEdit,
+            canDelete
+        } = this.props;
 
         return (
             <Paper className={classes.root}>
@@ -51,7 +60,9 @@ class ProductsList extends React.Component {
                                     <TableCell>Name</TableCell>
                                     <TableCell numeric>Price</TableCell>
                                     <TableCell numeric>Currency</TableCell>
-                                    <TableCell numeric />
+                                    {(canEdit || canDelete) && (
+                                        <TableCell numeric />
+                                    )}
                                 </TableRow>
                             </TableHead>
 
@@ -59,6 +70,9 @@ class ProductsList extends React.Component {
                                 {products.map(product => (
                                     <ProductsListRow
                                         key={product.id}
+                                        canEdit={canEdit}
+                                        canDelete={canDelete}
+                                        onEdit={onEdit}
                                         product={product}
                                     />
                                 ))}
@@ -75,9 +89,12 @@ ProductsList.propTypes = {
     classes: PropTypes.object.isRequired,
     onDidMount: PropTypes.func.isRequired,
     onAdd: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
     isGetting: PropTypes.bool.isRequired,
     products: PropTypes.array.isRequired,
-    canAdd: PropTypes.bool.isRequired
+    canAdd: PropTypes.bool.isRequired,
+    canEdit: PropTypes.bool.isRequired,
+    canDelete: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
@@ -86,7 +103,9 @@ const mapStateToProps = state => {
             selectors.productsIsGetting(state) ||
             selectors.permissionsIsGetting(state),
         products: selectors.productsGet(state),
-        canAdd: selectors.permissionsCanAdd(state)
+        canAdd: selectors.permissionsCanAdd(state),
+        canEdit: selectors.permissionsCanUpdate(state),
+        canDelete: selectors.permissionsCanDelete(state)
     };
 };
 

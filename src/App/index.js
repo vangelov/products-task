@@ -4,24 +4,40 @@ import ProductsList from "./ProductsList";
 import ProductCreateOrUpdate from "./ProductCreateOrUpdate";
 
 export default class App extends React.Component {
-    state = { open: false };
+    state = { openCreateOrUpdateDialog: false, productForUpdate: null };
 
-    handleProductsListAdd = () => {
-        this.setState({ open: true });
+    openDialogForCreating = () => {
+        this.setState({
+            openCreateOrUpdateDialog: true,
+            productForUpdate: null
+        });
     };
 
-    handleClose = () => {
-        this.setState({ open: false });
+    openDialogForUpdating = productForUpdate => {
+        this.setState({ openCreateOrUpdateDialog: true, productForUpdate });
+    };
+
+    closeDialog = () => {
+        this.setState({ openCreateOrUpdateDialog: false });
     };
 
     render() {
+        const { productForUpdate, openCreateOrUpdateDialog } = this.state;
+
         return (
             <div>
-                <ProductsList onAdd={this.handleProductsListAdd} />
-                <ProductCreateOrUpdate
-                    open={this.state.open}
-                    onClose={this.handleClose}
+                <ProductsList
+                    onAdd={this.openDialogForCreating}
+                    onEdit={this.openDialogForUpdating}
                 />
+
+                {openCreateOrUpdateDialog && (
+                    <ProductCreateOrUpdate
+                        productForUpdate={productForUpdate}
+                        open={openCreateOrUpdateDialog}
+                        onClose={this.closeDialog}
+                    />
+                )}
             </div>
         );
     }

@@ -5,6 +5,7 @@ const initialState = {
     isGetting: false,
     isCreating: false,
     isDeleting: false,
+    isUpdating: false,
     error: null
 };
 
@@ -46,6 +47,25 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isCreating: false,
+                error: action.error
+            };
+
+        case actions.PRODUCTS_UPDATE:
+            return {
+                ...state,
+                isUpdating: true
+            };
+
+        case actions.PRODUCTS_UPDATE_SUCCESS:
+            return {
+                ...state,
+                isUpdating: false
+            };
+
+        case actions.PRODUCTS_UPDATE_ERROR:
+            return {
+                ...state,
+                isUpdating: false,
                 error: action.error
             };
 

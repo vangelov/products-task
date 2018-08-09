@@ -49,10 +49,44 @@ export const productsCreate = product => async dispatch => {
 };
 
 export const productsCreateAndGet = (
-    product,
+    newProduct,
     afterCreateCallback
 ) => async dispatch => {
-    await dispatch(productsCreate(product));
+    await dispatch(productsCreate(newProduct));
     afterCreateCallback();
+    await dispatch(productsGet());
+};
+
+export const PRODUCTS_UPDATE_SUCCESS = "PRODUCTS_UPDATE_SUCCESS";
+export const productsUpdateSuccess = product => ({
+    type: PRODUCTS_UPDATE_SUCCESS,
+    product
+});
+
+export const PRODUCTS_UPDATE_ERROR = "PRODUCTS_UPDATE_ERROR";
+export const productsUpdateError = error => ({
+    type: PRODUCTS_UPDATE_ERROR,
+    error
+});
+
+export const PRODUCTS_UPDATE = "PRODUCTS_UPDATE";
+export const productsUpdate = (productId, updatedProduct) => async dispatch => {
+    dispatch({ type: PRODUCTS_UPDATE, productId, updatedProduct });
+
+    try {
+        await api.productsUpdate(productId, updatedProduct);
+        dispatch(productsUpdateSuccess(updatedProduct));
+    } catch (error) {
+        dispatch(productsUpdateError(updatedProduct));
+    }
+};
+
+export const productsUpdateAndGet = (
+    productId,
+    updatedProduct,
+    afterUpdateCallback
+) => async dispatch => {
+    await dispatch(productsUpdate(productId, updatedProduct));
+    afterUpdateCallback();
     await dispatch(productsGet());
 };
