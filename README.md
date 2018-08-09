@@ -1,4 +1,4 @@
-# Products demo
+# Products Task
 
 ## How to run it
 
