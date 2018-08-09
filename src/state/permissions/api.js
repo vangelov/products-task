@@ -1,13 +1,8 @@
-import { delay } from '../../utils/delay';
+import { delay } from "../../utils/delay";
 
-const PERMISSIONS = [
-  'CREATE',
-  'UPDATE',
-  'READ',
-  'DELETE'
-];
+const PERMISSIONS = ["CREATE", "UPDATE", "READ", "DELETE"];
 
-export async function getPermissions() {
-  await delay(1000);
-  return PERMISSIONS;
+export async function permissionsGet() {
+    await delay(500);
+    return PERMISSIONS;
 }
