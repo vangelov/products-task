@@ -15,19 +15,19 @@ Permissions can be updated in the `src/state/permissions/api.js` file.
 
 -   `/App`: Contains all components. This folder has the following recursive tree structure and file name conventions:
 
-    /ComponentX
-    /ComponentY
-    index.js
-    ComponentZ.js
-    index.js
+        /ComponentX
+            /ComponentY
+                index.js
+            ComponentZ.js
+            index.js
 
     The file tree structure mimics the render tree on the DOM, i.e. if `ComponentX` contains or may contain `ComponentY` or `ComponentZ` as children, the last two are files or directories in the `/ComponentX` folder. This organization allows us to easily see the UI structure of app.
 
 -   `/state`: Contains all code related to the app state: actions, selectors, reducers, etc. The folder is organized by the reducer name in the store. It has the following recursive tree structure and file name conventions:
 
-                 /reducerNameInTheStoreX
-                     /reducerNameInTheStoreY
-                     /reducerNameInTheStoreZ
-                     reducer.js (or reducerMaker.js)
-                     selectors.js
-                     actions.js
+         /reducerNameInTheStoreX
+             /reducerNameInTheStoreY
+             /reducerNameInTheStoreZ
+             reducer.js (or reducerMaker.js)
+             selectors.js
+             actions.js
