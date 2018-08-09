@@ -27,8 +27,8 @@ export default class App extends React.Component {
         return (
             <div>
                 <ProductsList
-                    onAdd={this.openDialogForCreating}
-                    onEdit={this.openDialogForUpdating}
+                    onCreate={this.openDialogForCreating}
+                    onUpdate={this.openDialogForUpdating}
                 />
 
                 {openCreateOrUpdateDialog && (

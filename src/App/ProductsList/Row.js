@@ -23,12 +23,12 @@ export default class ProductsListRow extends React.Component {
     };
 
     handleEdit = () => {
-        this.props.onEdit(this.props.product);
+        this.props.onUpdate(this.props.product);
         this.close();
     };
 
     render() {
-        const { product, canEdit, canDelete } = this.props;
+        const { product, canUpdate, canDelete } = this.props;
         const { name, price, currency } = product;
         const { openMenu } = this.state;
 
@@ -38,7 +38,7 @@ export default class ProductsListRow extends React.Component {
                 <TableCell numeric>{price}</TableCell>
                 <TableCell numeric>{currency}</TableCell>
 
-                {(canEdit || canDelete) && (
+                {(canUpdate || canDelete) && (
                     <TableCell numeric padding="checkbox">
                         <IconButton onClick={this.handleClick}>
                             <MoreVertIcon />
@@ -51,7 +51,7 @@ export default class ProductsListRow extends React.Component {
                     open={openMenu}
                     onClose={this.close}
                 >
-                    {canEdit && (
+                    {canUpdate && (
                         <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
                     )}
                     {canDelete && (
@@ -64,8 +64,8 @@ export default class ProductsListRow extends React.Component {
 }
 
 ProductsListRow.propTypes = {
-    onEdit: PropTypes.func.isRequired,
-    canEdit: PropTypes.bool.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    canUpdate: PropTypes.bool.isRequired,
     canDelete: PropTypes.bool.isRequired,
     product: PropTypes.object.isRequired
 };

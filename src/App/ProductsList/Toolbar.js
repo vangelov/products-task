@@ -19,7 +19,7 @@ const styles = theme => ({
     }
 });
 
-export const ProductsListToolbar = ({ classes, onAdd, canAdd }) => {
+export const ProductsListToolbar = ({ classes, onCreate, canCreate }) => {
     return (
         <Toolbar className={classes.root}>
             <div className={classes.title}>
@@ -28,8 +28,8 @@ export const ProductsListToolbar = ({ classes, onAdd, canAdd }) => {
 
             <div className={classes.spacer} />
 
-            {canAdd && (
-                <IconButton onClick={onAdd}>
+            {canCreate && (
+                <IconButton onClick={onCreate}>
                     <AddIcon />
                 </IconButton>
             )}
@@ -39,8 +39,8 @@ export const ProductsListToolbar = ({ classes, onAdd, canAdd }) => {
 
 ProductsListToolbar.propTypes = {
     classes: PropTypes.object.isRequired,
-    onAdd: PropTypes.func.isRequired,
-    canAdd: PropTypes.bool.isRequired
+    onCreate: PropTypes.func.isRequired,
+    canCreate: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(ProductsListToolbar);

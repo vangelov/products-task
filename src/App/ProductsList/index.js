@@ -34,18 +34,21 @@ class ProductsList extends React.Component {
     render() {
         const {
             classes,
-            onAdd,
-            onEdit,
+            onCreate,
+            onUpdate,
             isGetting,
             products,
-            canAdd,
-            canEdit,
+            canCreate,
+            canUpdate,
             canDelete
         } = this.props;
 
         return (
             <Paper className={classes.root}>
-                <ProductsListToolbar canAdd={canAdd} onAdd={onAdd} />
+                <ProductsListToolbar
+                    canCreate={canCreate}
+                    onCreate={onCreate}
+                />
 
                 <div className={classes.tableWrapper}>
                     {isGetting && <LinearProgress />}
@@ -60,7 +63,7 @@ class ProductsList extends React.Component {
                                     <TableCell>Name</TableCell>
                                     <TableCell numeric>Price</TableCell>
                                     <TableCell numeric>Currency</TableCell>
-                                    {(canEdit || canDelete) && (
+                                    {(canUpdate || canDelete) && (
                                         <TableCell numeric />
                                     )}
                                 </TableRow>
@@ -70,9 +73,9 @@ class ProductsList extends React.Component {
                                 {products.map(product => (
                                     <ProductsListRow
                                         key={product.id}
-                                        canEdit={canEdit}
+                                        canUpdate={canUpdate}
                                         canDelete={canDelete}
-                                        onEdit={onEdit}
+                                        onUpdate={onUpdate}
                                         product={product}
                                     />
                                 ))}
@@ -88,12 +91,12 @@ class ProductsList extends React.Component {
 ProductsList.propTypes = {
     classes: PropTypes.object.isRequired,
     onDidMount: PropTypes.func.isRequired,
-    onAdd: PropTypes.func.isRequired,
-    onEdit: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
     isGetting: PropTypes.bool.isRequired,
     products: PropTypes.array.isRequired,
-    canAdd: PropTypes.bool.isRequired,
-    canEdit: PropTypes.bool.isRequired,
+    canCreate: PropTypes.bool.isRequired,
+    canUpdate: PropTypes.bool.isRequired,
     canDelete: PropTypes.bool.isRequired
 };
 
@@ -103,8 +106,8 @@ const mapStateToProps = state => {
             selectors.productsIsGetting(state) ||
             selectors.permissionsIsGetting(state),
         products: selectors.productsGet(state),
-        canAdd: selectors.permissionsCanAdd(state),
-        canEdit: selectors.permissionsCanUpdate(state),
+        canCreate: selectors.permissionsCanAdd(state),
+        canUpdate: selectors.permissionsCanUpdate(state),
         canDelete: selectors.permissionsCanDelete(state)
     };
 };
