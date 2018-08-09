@@ -40,7 +40,9 @@ class ProductsList extends React.Component {
             products,
             canCreate,
             canUpdate,
-            canDelete
+            canDelete,
+            onDelete,
+            isDeleting
         } = this.props;
 
         return (
@@ -76,6 +78,8 @@ class ProductsList extends React.Component {
                                         canUpdate={canUpdate}
                                         canDelete={canDelete}
                                         onUpdate={onUpdate}
+                                        onDelete={onDelete}
+                                        isDeleting={isDeleting}
                                         product={product}
                                     />
                                 ))}
@@ -108,7 +112,8 @@ const mapStateToProps = state => {
         products: selectors.productsGet(state),
         canCreate: selectors.permissionsCanAdd(state),
         canUpdate: selectors.permissionsCanUpdate(state),
-        canDelete: selectors.permissionsCanDelete(state)
+        canDelete: selectors.permissionsCanDelete(state),
+        isDeleting: selectors.productsIsDeleting(state)
     };
 };
 
@@ -116,6 +121,9 @@ const mapDispatchToProps = dispatch => {
     return {
         onDidMount: () => {
             dispatch(actions.productsAndPermissionsGet());
+        },
+        onDelete: (product, closeMenuCallback) => {
+            dispatch(actions.productsDeleteAndGet(product, closeMenuCallback));
         }
     };
 };

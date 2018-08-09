@@ -90,3 +90,36 @@ export const productsUpdateAndGet = (
     afterUpdateCallback();
     await dispatch(productsGet());
 };
+
+export const PRODUCTS_DELETE_SUCCESS = "PRODUCTS_DELETE_SUCCESS";
+export const productsDeleteSuccess = product => ({
+    type: PRODUCTS_DELETE_SUCCESS,
+    product
+});
+
+export const PRODUCTS_DELETE_ERROR = "PRODUCTS_DELETE_ERROR";
+export const productsDeleteError = error => ({
+    type: PRODUCTS_DELETE_ERROR,
+    error
+});
+
+export const PRODUCTS_DELETE = "PRODUCTS_DELETE";
+export const productsDelete = product => async dispatch => {
+    dispatch({ type: PRODUCTS_DELETE });
+
+    try {
+        await api.productsDelete(product);
+        dispatch(productsDeleteSuccess(product));
+    } catch (error) {
+        dispatch(productsDeleteError(product));
+    }
+};
+
+export const productsDeleteAndGet = (
+    product,
+    afterDeleteCallback
+) => async dispatch => {
+    await dispatch(productsDelete(product));
+    afterDeleteCallback();
+    await dispatch(productsGet());
+};

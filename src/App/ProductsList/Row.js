@@ -27,8 +27,12 @@ export default class ProductsListRow extends React.Component {
         this.close();
     };
 
+    handleDelete = () => {
+        this.props.onDelete(this.props.product, this.close);
+    };
+
     render() {
-        const { product, canUpdate, canDelete } = this.props;
+        const { product, canUpdate, canDelete, isDeleting } = this.props;
         const { name, price, currency } = product;
         const { openMenu } = this.state;
 
@@ -52,10 +56,20 @@ export default class ProductsListRow extends React.Component {
                     onClose={this.close}
                 >
                     {canUpdate && (
-                        <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
+                        <MenuItem
+                            disabled={isDeleting}
+                            onClick={this.handleEdit}
+                        >
+                            Edit
+                        </MenuItem>
                     )}
                     {canDelete && (
-                        <MenuItem onClick={this.close}>Delete</MenuItem>
+                        <MenuItem
+                            disabled={isDeleting}
+                            onClick={this.handleDelete}
+                        >
+                            {isDeleting ? "Deleting..." : "Delete"}
+                        </MenuItem>
                     )}
                 </Menu>
             </TableRow>
@@ -65,7 +79,9 @@ export default class ProductsListRow extends React.Component {
 
 ProductsListRow.propTypes = {
     onUpdate: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     canUpdate: PropTypes.bool.isRequired,
     canDelete: PropTypes.bool.isRequired,
-    product: PropTypes.object.isRequired
+    product: PropTypes.object.isRequired,
+    isDeleting: PropTypes.bool.isRequired
 };

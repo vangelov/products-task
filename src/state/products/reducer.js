@@ -69,6 +69,25 @@ export default (state = initialState, action) => {
                 error: action.error
             };
 
+        case actions.PRODUCTS_DELETE:
+            return {
+                ...state,
+                isDeleting: true
+            };
+
+        case actions.PRODUCTS_DELETE_SUCCESS:
+            return {
+                ...state,
+                isDeleting: false
+            };
+
+        case actions.PRODUCTS_DELETE_ERROR:
+            return {
+                ...state,
+                isDeleting: false,
+                error: action.error
+            };
+
         default:
             return state;
     }

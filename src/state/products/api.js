@@ -9,6 +9,12 @@ let products = [
 ];
 
 export async function productsGet() {
+    const permissions = await permissionsApi.permissionsGet();
+
+    if (!permissions.includes("READ")) {
+        throw new Error("You are not allowed to read products");
+    }
+
     await delay(500);
     return [...products];
 }
@@ -42,4 +48,14 @@ export async function productsUpdate(productId, updatedProduct) {
 
         return product;
     });
+}
+
+export async function productsDelete(productToDelete) {
+    const permissions = await permissionsApi.permissionsGet();
+
+    if (!permissions.includes("DELETE")) {
+        throw new Error("You are not allowed to delete a product");
+    }
+
+    products = products.filter(product => product.id !== productToDelete.id);
 }
