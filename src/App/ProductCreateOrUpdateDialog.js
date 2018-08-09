@@ -80,7 +80,14 @@ export class ProductCreateOrUpdate extends React.Component {
 
     render() {
         const { open, isCreating, isUpdating, productForUpdate } = this.props;
-        const { nameValid, priceValid, currencyValid } = this.state;
+        const {
+            name,
+            price,
+            currency,
+            nameValid,
+            priceValid,
+            currencyValid
+        } = this.state;
 
         return (
             <Dialog open={open} onClose={this.close}>
@@ -95,7 +102,7 @@ export class ProductCreateOrUpdate extends React.Component {
                         helperText={nameValid ? "" : "Please enter a value"}
                         disabled={isCreating}
                         onChange={this.handleTextFieldChange("name")}
-                        value={this.state.name}
+                        value={name}
                         autoFocus={!productForUpdate}
                         margin="dense"
                         label="Name"
@@ -109,7 +116,7 @@ export class ProductCreateOrUpdate extends React.Component {
                         error={!priceValid}
                         helperText={priceValid ? "" : "Please enter a value"}
                         onChange={this.handleTextFieldChange("price")}
-                        value={this.state.price}
+                        value={price}
                         margin="dense"
                         label="Price"
                         type="number"
@@ -124,15 +131,15 @@ export class ProductCreateOrUpdate extends React.Component {
                             currencyValid ? "" : "Please select a value"
                         }
                         onChange={this.handleTextFieldChange("currency")}
-                        value={this.state.currency}
+                        value={currency}
                         select
                         fullWidth
                         label="Currency"
                         margin="dense"
                     >
-                        {currencies.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
+                        {currencies.map(({ value, label }) => (
+                            <MenuItem key={value} value={value}>
+                                {label}
                             </MenuItem>
                         ))}
                     </TextField>
