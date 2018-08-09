@@ -1,7 +1,7 @@
 import React from "react";
 
 import ProductsList from "./ProductsList";
-import ProductCreateOrUpdate from "./ProductCreateOrUpdate";
+import ProductCreateOrUpdateDialog from "./ProductCreateOrUpdateDialog";
 
 export default class App extends React.Component {
     state = { openCreateOrUpdateDialog: false, productForUpdate: null };
@@ -32,7 +32,7 @@ export default class App extends React.Component {
                 />
 
                 {openCreateOrUpdateDialog && (
-                    <ProductCreateOrUpdate
+                    <ProductCreateOrUpdateDialog
                         productForUpdate={productForUpdate}
                         open={openCreateOrUpdateDialog}
                         onClose={this.closeDialog}

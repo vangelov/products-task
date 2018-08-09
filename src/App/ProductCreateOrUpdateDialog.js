@@ -107,7 +107,7 @@ export class ProductCreateOrUpdate extends React.Component {
                         required
                         disabled={isCreating}
                         error={!priceValid}
-                        helperText={nameValid ? "" : "Please enter a value"}
+                        helperText={priceValid ? "" : "Please enter a value"}
                         onChange={this.handleTextFieldChange("price")}
                         value={this.state.price}
                         margin="dense"
@@ -120,7 +120,9 @@ export class ProductCreateOrUpdate extends React.Component {
                         required
                         disabled={isCreating}
                         error={!currencyValid}
-                        helperText={nameValid ? "" : "Please select a value"}
+                        helperText={
+                            currencyValid ? "" : "Please select a value"
+                        }
                         onChange={this.handleTextFieldChange("currency")}
                         value={this.state.currency}
                         select
