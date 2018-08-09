@@ -23,8 +23,8 @@ const currencies = [
         label: "€"
     },
     {
-        value: "JPY",
-        label: "¥"
+        value: "GBP",
+        label: "£"
     }
 ];
 

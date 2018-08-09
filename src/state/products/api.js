@@ -3,9 +3,23 @@ import * as permissionsApi from "../permissions/api";
 
 let lastId = 0;
 
+function createProduct(name, price, currency) {
+    lastId++;
+    return { id: lastId, name, price, currency };
+}
+
 let products = [
-    { id: lastId, name: "Product 1", price: 20, currency: "USD" },
-    { id: ++lastId, name: "Product 2", price: 100, currency: "EUR" }
+    createProduct(
+        "Small Great Things: The bestselling novel you won't want to miss",
+        6.47,
+        "GBP"
+    ),
+    createProduct("Beneath a Scarlet Sky: A Novel", 15.99, "USD"),
+    createProduct(
+        "Raven Black: Book One of the Shetland Island Quartet",
+        8.0,
+        "EUR"
+    )
 ];
 
 export async function productsGet() {

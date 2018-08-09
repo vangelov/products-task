@@ -23,7 +23,7 @@ export const ProductsListToolbar = ({ classes, onCreate, canCreate }) => {
     return (
         <Toolbar className={classes.root}>
             <div className={classes.title}>
-                <Typography variant="title">Products</Typography>
+                <Typography variant="title">Books</Typography>
             </div>
 
             <div className={classes.spacer} />

@@ -39,7 +39,7 @@ export default class ProductsListRow extends React.Component {
         return (
             <TableRow>
                 <TableCell>{name}</TableCell>
-                <TableCell numeric>{price}</TableCell>
+                <TableCell numeric>{Number(price).toFixed(2)}</TableCell>
                 <TableCell numeric>{currency}</TableCell>
 
                 {(canUpdate || canDelete) && (

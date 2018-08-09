@@ -56,10 +56,7 @@ class ProductsList extends React.Component {
                     {isGetting && <LinearProgress />}
 
                     {products.length > 0 && (
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                        >
+                        <Table className={classes.table}>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Name</TableCell>
