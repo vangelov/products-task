@@ -28,7 +28,7 @@ const currencies = [
     }
 ];
 
-export class ProductAddOrUpdate extends React.Component {
+export class ProductCreateOrUpdate extends React.Component {
     initialState = {
         name: "",
         nameValid: true,
@@ -143,7 +143,7 @@ export class ProductAddOrUpdate extends React.Component {
     }
 }
 
-ProductAddOrUpdate.propTypes = {
+ProductCreateOrUpdate.propTypes = {
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
@@ -167,4 +167,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ProductAddOrUpdate);
+)(ProductCreateOrUpdate);

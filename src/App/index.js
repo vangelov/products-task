@@ -1,7 +1,7 @@
 import React from "react";
 
 import ProductsList from "./ProductsList";
-import ProductAddOrUpdate from "./ProductAddOrUpdate";
+import ProductCreateOrUpdate from "./ProductCreateOrUpdate";
 
 export default class App extends React.Component {
     state = { open: false };
@@ -18,7 +18,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <ProductsList onAdd={this.handleProductsListAdd} />
-                <ProductAddOrUpdate
+                <ProductCreateOrUpdate
                     open={this.state.open}
                     onClose={this.handleClose}
                 />
