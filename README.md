@@ -9,6 +9,8 @@ This runs the app in development mode. In order to build it for production run:
 
 -   `yarn/npm build`
 
+Permissions can be updated in the `src/state/permissions/api.js` file.
+
 ### Folder organization
 
 -   `/App`: Contains all components. This folder has the following recursive tree structure and file name conventions:
