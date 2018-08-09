@@ -1,4 +1,4 @@
-import { delay } from "../../utils/delay";
+import { randomDelay } from "../../utils/delay";
 import * as permissionsApi from "../permissions/api";
 
 let lastId = 0;
@@ -15,7 +15,7 @@ export async function productsGet() {
         throw new Error("You are not allowed to read products");
     }
 
-    await delay(500);
+    await randomDelay();
     return [...products];
 }
 
@@ -26,7 +26,7 @@ export async function productsCreate(product) {
         throw new Error("You are not allowed to create a product");
     }
 
-    await delay(500);
+    await randomDelay();
 
     const newProduct = { id: ++lastId, ...product };
     products.unshift(newProduct);
@@ -41,6 +41,7 @@ export async function productsUpdate(productId, updatedProduct) {
         throw new Error("You are not allowed to update a product");
     }
 
+    await randomDelay();
     products = products.map(product => {
         if (product.id === productId) {
             return { id: productId, ...updatedProduct };
@@ -57,5 +58,6 @@ export async function productsDelete(productToDelete) {
         throw new Error("You are not allowed to delete a product");
     }
 
+    await randomDelay();
     products = products.filter(product => product.id !== productToDelete.id);
 }
