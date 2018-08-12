@@ -1,97 +1,81 @@
 import * as api from "./api";
 
-export const PRODUCTS_GET_SUCCESS = "PRODUCTS_GET_SUCCESS";
-export const productsGetSuccess = products => ({
-    type: PRODUCTS_GET_SUCCESS,
-    products
-});
-
-export const PRODUCTS_GET_ERROR = "PRODUCTS_GET_ERROR";
-export const productsGetError = error => ({ type: PRODUCTS_GET_ERROR, error });
-
 export const PRODUCTS_GET = "PRODUCTS_GET";
+export const PRODUCTS_GET_SUCCESS = "PRODUCTS_GET_SUCCESS";
+export const PRODUCTS_GET_ERROR = "PRODUCTS_GET_ERROR";
 export const productsGet = () => async dispatch => {
     let products = [];
     dispatch({ type: PRODUCTS_GET });
 
     try {
         products = await api.productsGet();
-        dispatch(productsGetSuccess(products));
+        dispatch({
+            type: PRODUCTS_GET_SUCCESS,
+            products
+        });
     } catch (error) {
-        dispatch(productsGetError(error));
+        dispatch({ type: PRODUCTS_GET_ERROR, error: error.message });
     }
 
     return products;
 };
 
-export const PRODUCTS_CREATE_SUCCESS = "PRODUCTS_CREATE_SUCCESS";
-export const productsCreateSuccess = product => ({
-    type: PRODUCTS_CREATE_SUCCESS,
-    product
-});
-
-export const PRODUCTS_CREATE_ERROR = "PRODUCTS_CRATE_SUCCESS";
-export const productsCreateError = error => ({
-    type: PRODUCTS_CREATE_ERROR,
-    error
-});
-
 export const PRODUCTS_CREATE = "PRODUCTS_CREATE";
+export const PRODUCTS_CREATE_SUCCESS = "PRODUCTS_CREATE_SUCCESS";
+export const PRODUCTS_CREATE_ERROR = "PRODUCTS_CREATE_ERROR";
 export const productsCreate = product => async dispatch => {
-    dispatch({ type: PRODUCTS_CREATE });
+    dispatch({ type: PRODUCTS_CREATE, product });
 
     try {
-        await api.productsCreate(product);
-        dispatch(productsCreateSuccess(product));
+        const createdProduct = await api.productsCreate(product);
+        dispatch({
+            type: PRODUCTS_CREATE_SUCCESS,
+            product: createdProduct
+        });
     } catch (error) {
-        dispatch(productsCreateError(product));
+        dispatch({
+            type: PRODUCTS_CREATE_ERROR,
+            product,
+            error: error.message
+        });
     }
 };
-
-export const PRODUCTS_UPDATE_SUCCESS = "PRODUCTS_UPDATE_SUCCESS";
-export const productsUpdateSuccess = product => ({
-    type: PRODUCTS_UPDATE_SUCCESS,
-    product
-});
-
-export const PRODUCTS_UPDATE_ERROR = "PRODUCTS_UPDATE_ERROR";
-export const productsUpdateError = error => ({
-    type: PRODUCTS_UPDATE_ERROR,
-    error
-});
 
 export const PRODUCTS_UPDATE = "PRODUCTS_UPDATE";
-export const productsUpdate = (productId, updatedProduct) => async dispatch => {
-    dispatch({ type: PRODUCTS_UPDATE, productId, updatedProduct });
+export const PRODUCTS_UPDATE_SUCCESS = "PRODUCTS_UPDATE_SUCCESS";
+export const PRODUCTS_UPDATE_ERROR = "PRODUCTS_UPDATE_ERROR";
+export const productsUpdate = (productId, product) => async dispatch => {
+    dispatch({ type: PRODUCTS_UPDATE, productId, product });
 
     try {
-        await api.productsUpdate(productId, updatedProduct);
-        dispatch(productsUpdateSuccess(updatedProduct));
+        await api.productsUpdate(productId, product);
+        dispatch({
+            type: PRODUCTS_UPDATE_SUCCESS,
+            product
+        });
     } catch (error) {
-        dispatch(productsUpdateError(updatedProduct));
+        dispatch({
+            type: PRODUCTS_UPDATE_ERROR,
+            product,
+            error: error.message
+        });
     }
 };
 
-export const PRODUCTS_DELETE_SUCCESS = "PRODUCTS_DELETE_SUCCESS";
-export const productsDeleteSuccess = product => ({
-    type: PRODUCTS_DELETE_SUCCESS,
-    product
-});
-
-export const PRODUCTS_DELETE_ERROR = "PRODUCTS_DELETE_ERROR";
-export const productsDeleteError = error => ({
-    type: PRODUCTS_DELETE_ERROR,
-    error
-});
-
 export const PRODUCTS_DELETE = "PRODUCTS_DELETE";
+export const PRODUCTS_DELETE_SUCCESS = "PRODUCTS_DELETE_SUCCESS";
+export const PRODUCTS_DELETE_ERROR = "PRODUCTS_DELETE_ERROR";
 export const productsDelete = product => async dispatch => {
-    dispatch({ type: PRODUCTS_DELETE });
+    dispatch({ type: PRODUCTS_DELETE, product });
 
     try {
         await api.productsDelete(product);
-        dispatch(productsDeleteSuccess(product));
+        dispatch({ type: PRODUCTS_DELETE_SUCCESS, product });
     } catch (error) {
-        dispatch(productsDeleteError(product));
+        dispatch({
+            type: PRODUCTS_DELETE_ERROR,
+            product,
+            error: error.message
+        });
     }
 };
