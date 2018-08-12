@@ -14,7 +14,7 @@ This runs the app in development mode. In order to build it for production run:
 ## Notes
 
 -   Permissions can be updated in the `src/state/permissions/api.js` file
--   Errors can be simulated by uncommenting the relevant code in the api.js files
+-   Errors can be simulated by uncommenting the relevant code in the `api.js` files in `src/state/products` and `src/state/permissions`
 
 ## Folder organization
 
