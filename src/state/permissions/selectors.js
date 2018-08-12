@@ -10,3 +10,5 @@ export const permissionsCanUpdate = state =>
     state.permissions.list.includes("UPDATE");
 
 export const permissionsIsGetting = state => state.permissions.isGetting;
+
+export const permissionsError = state => state.permissions.error;

@@ -22,3 +22,6 @@ export const permissionsGet = () => async dispatch => {
 
     return permissions;
 };
+
+export const PERMISSIONS_CLEAR_ERROR = "PERMISSIONS_CLEAR_ERROR";
+export const permissionsClearError = () => ({ type: PERMISSIONS_CLEAR_ERROR });

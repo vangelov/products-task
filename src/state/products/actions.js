@@ -79,3 +79,6 @@ export const productsDelete = product => async dispatch => {
         });
     }
 };
+
+export const PRODUCTS_CLEAR_ERROR = "PRODUCTS_CLEAR_ERROR";
+export const productsClearError = () => ({ type: PRODUCTS_CLEAR_ERROR });

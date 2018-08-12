@@ -2,10 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
 import ProductsList from "./ProductsList";
 import ProductCreateOrUpdateDialog from "./ProductCreateOrUpdateDialog";
 import ProductDeleteDialog from "./ProductDeleteDialog";
 import * as actions from "../state/actions";
+import * as selectors from "../state/selectors";
 
 export class App extends React.Component {
     state = {
@@ -50,8 +55,22 @@ export class App extends React.Component {
             productToDelete
         } = this.state;
 
+        const { error, onErrorClose } = this.props;
+
         return (
             <div>
+                <Snackbar
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    open={error !== null}
+                    onClose={onErrorClose}
+                    message={<span>{error}</span>}
+                    action={
+                        <IconButton onClick={onErrorClose} color="inherit">
+                            <CloseIcon />
+                        </IconButton>
+                    }
+                />
+
                 <ProductsList
                     onCreate={this.openDialogForCreating}
                     onUpdate={this.openDialogForUpdating}
@@ -79,11 +98,16 @@ export class App extends React.Component {
 }
 
 App.propTypes = {
-    onDidMount: PropTypes.func.isRequired
+    onDidMount: PropTypes.func.isRequired,
+    onErrorClose: PropTypes.func.isRequired,
+    error: PropTypes.string
 };
 
 const mapStateToProps = state => {
-    return {};
+    return {
+        error:
+            selectors.permissionsError(state) || selectors.productsError(state)
+    };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -94,6 +118,10 @@ const mapDispatchToProps = dispatch => {
             if (permissions.includes("READ")) {
                 await dispatch(actions.productsGet());
             }
+        },
+        onErrorClose: () => {
+            dispatch(actions.productsClearError());
+            dispatch(actions.permissionsClearError());
         }
     };
 };

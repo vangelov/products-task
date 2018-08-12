@@ -30,6 +30,10 @@ export async function productsGet() {
     }
 
     await randomDelay();
+
+    // Uncomment to simulate an error
+    // throw new Error("Cannot get products");
+
     return [...products];
 }
 
@@ -41,6 +45,9 @@ export async function productsCreate(product) {
     }
 
     await randomDelay();
+
+    // Uncomment to simulate an error
+    // throw new Error("Cannot create product");
 
     const newProduct = { id: ++lastId, ...product };
     products.unshift(newProduct);
@@ -56,6 +63,10 @@ export async function productsUpdate(productId, updatedProduct) {
     }
 
     await randomDelay();
+
+    // Uncomment to simulate an error
+    // throw new Error("Cannot update product");
+
     products = products.map(product => {
         if (product.id === productId) {
             return { id: productId, ...updatedProduct };
@@ -73,5 +84,9 @@ export async function productsDelete(productToDelete) {
     }
 
     await randomDelay();
+
+    // Uncomment to simulate an error
+    // throw new Error("Cannot delete product");
+
     products = products.filter(product => product.id !== productToDelete.id);
 }

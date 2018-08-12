@@ -28,6 +28,12 @@ export default (state = initialState, action) => {
                 error: action.error
             };
 
+        case actions.PERMISSIONS_CLEAR_ERROR:
+            return {
+                ...state,
+                error: null
+            };
+
         default:
             return state;
     }

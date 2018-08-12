@@ -7,3 +7,5 @@ export const productsIsCreating = state => state.products.isCreating;
 export const productsIsUpdating = state => state.products.isUpdating;
 
 export const productsIsDeleting = state => state.products.isDeleting;
+
+export const productsError = state => state.products.error;
