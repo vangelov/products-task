@@ -54,7 +54,7 @@ export default class ProductsListRow extends React.Component {
                 <Menu
                     anchorEl={this.menuTarget}
                     open={openMenu}
-                    onClose={this.close}
+                    onClose={this.closeMenu}
                 >
                     {canUpdate && (
                         <MenuItem onClick={this.handleUpdate}>Update</MenuItem>
