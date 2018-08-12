@@ -9,7 +9,8 @@ This runs the app in development mode. In order to build it for production run:
 
 -   `yarn/npm build`
 
-Permissions can be updated in the `src/state/permissions/api.js` file.
+_Note: Permissions can be updated in the `src/state/permissions/api.js` file._
+_Note: Errors can be simulated by uncommenting the relevant code in the api.js files_
 
 ### Folder organization
 
