@@ -14,7 +14,6 @@ import TableCell from "@material-ui/core/TableCell";
 
 import ProductsListToolbar from "./Toolbar";
 import ProductsListRow from "./Row";
-import * as actions from "../../state/actions";
 import * as selectors from "../../state/selectors";
 
 const styles = theme => ({
@@ -27,10 +26,6 @@ const styles = theme => ({
 });
 
 class ProductsList extends React.Component {
-    componentDidMount() {
-        this.props.onDidMount();
-    }
-
     render() {
         const {
             classes,
@@ -41,8 +36,7 @@ class ProductsList extends React.Component {
             canCreate,
             canUpdate,
             canDelete,
-            onDelete,
-            isDeleting
+            onDelete
         } = this.props;
 
         return (
@@ -76,7 +70,6 @@ class ProductsList extends React.Component {
                                         canDelete={canDelete}
                                         onUpdate={onUpdate}
                                         onDelete={onDelete}
-                                        isDeleting={isDeleting}
                                         product={product}
                                     />
                                 ))}
@@ -91,9 +84,9 @@ class ProductsList extends React.Component {
 
 ProductsList.propTypes = {
     classes: PropTypes.object.isRequired,
-    onDidMount: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     isGetting: PropTypes.bool.isRequired,
     products: PropTypes.array.isRequired,
     canCreate: PropTypes.bool.isRequired,
@@ -109,20 +102,12 @@ const mapStateToProps = state => {
         products: selectors.productsGet(state),
         canCreate: selectors.permissionsCanAdd(state),
         canUpdate: selectors.permissionsCanUpdate(state),
-        canDelete: selectors.permissionsCanDelete(state),
-        isDeleting: selectors.productsIsDeleting(state)
+        canDelete: selectors.permissionsCanDelete(state)
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        onDidMount: () => {
-            dispatch(actions.productsAndPermissionsGet());
-        },
-        onDelete: (product, closeMenuCallback) => {
-            dispatch(actions.productsDeleteAndGet(product, closeMenuCallback));
-        }
-    };
+    return {};
 };
 
 export default compose(

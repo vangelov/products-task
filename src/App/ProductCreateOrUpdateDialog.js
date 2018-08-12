@@ -50,10 +50,6 @@ export class ProductCreateOrUpdate extends React.Component {
         });
     };
 
-    close = () => {
-        this.props.onClose();
-    };
-
     validate = onValid => {
         const { name, price, currency } = this.state;
         const nameValid = !!name;
@@ -68,7 +64,7 @@ export class ProductCreateOrUpdate extends React.Component {
         });
     };
 
-    add = () => {
+    create = () => {
         this.validate(newProduct => this.props.onCreate(newProduct));
     };
 
@@ -79,7 +75,14 @@ export class ProductCreateOrUpdate extends React.Component {
     };
 
     render() {
-        const { open, isCreating, isUpdating, productForUpdate } = this.props;
+        const {
+            open,
+            isCreating,
+            isUpdating,
+            productForUpdate,
+            onClose
+        } = this.props;
+
         const {
             name,
             price,
@@ -90,9 +93,9 @@ export class ProductCreateOrUpdate extends React.Component {
         } = this.state;
 
         return (
-            <Dialog open={open} onClose={this.close}>
+            <Dialog open={open} onClose={onClose}>
                 <DialogTitle>
-                    {productForUpdate ? "Update Product" : "Add Product"}
+                    {productForUpdate ? "Update Book" : "Add Book"}
                 </DialogTitle>
 
                 <DialogContent>
@@ -146,7 +149,7 @@ export class ProductCreateOrUpdate extends React.Component {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={this.close} color="secondary">
+                    <Button onClick={onClose} color="secondary">
                         Cancel
                     </Button>
 
@@ -160,11 +163,11 @@ export class ProductCreateOrUpdate extends React.Component {
                         </Button>
                     ) : (
                         <Button
-                            onClick={this.add}
+                            onClick={this.create}
                             disabled={isCreating}
                             color="primary"
                         >
-                            {isCreating ? "Addding..." : "Add"}
+                            {isCreating ? "Creating..." : "Create"}
                         </Button>
                     )}
                 </DialogActions>
@@ -192,19 +195,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onCreate: newProduct => {
-            dispatch(
-                actions.productsCreateAndGet(newProduct, ownProps.onClose)
-            );
+        onCreate: async newProduct => {
+            await dispatch(actions.productsCreate(newProduct));
+            ownProps.onClose();
+            await dispatch(actions.productsGet());
         },
-        onUpdate: (productId, updatedProduct) => {
-            dispatch(
-                actions.productsUpdateAndGet(
-                    productId,
-                    updatedProduct,
-                    ownProps.onClose
-                )
-            );
+        onUpdate: async (productId, updatedProduct) => {
+            await dispatch(actions.productsUpdate(productId, updatedProduct));
+            ownProps.onClose();
+            await dispatch(actions.productsGet());
         }
     };
 };

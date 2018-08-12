@@ -12,27 +12,28 @@ export default class ProductsListRow extends React.Component {
     state = { openMenu: false };
     menuTarget = null;
 
-    handleClick = event => {
+    openMenu = event => {
         this.menuTarget = event.currentTarget;
         this.setState({ openMenu: true });
     };
 
-    close = () => {
+    closeMenu = () => {
         this.menuTarget = null;
         this.setState({ openMenu: false });
     };
 
-    handleEdit = () => {
+    handleUpdate = () => {
+        this.closeMenu();
         this.props.onUpdate(this.props.product);
-        this.close();
     };
 
     handleDelete = () => {
-        this.props.onDelete(this.props.product, this.close);
+        this.closeMenu();
+        this.props.onDelete(this.props.product);
     };
 
     render() {
-        const { product, canUpdate, canDelete, isDeleting } = this.props;
+        const { product, canUpdate, canDelete } = this.props;
         const { name, price, currency } = product;
         const { openMenu } = this.state;
 
@@ -44,7 +45,7 @@ export default class ProductsListRow extends React.Component {
 
                 {(canUpdate || canDelete) && (
                     <TableCell numeric padding="checkbox">
-                        <IconButton onClick={this.handleClick}>
+                        <IconButton onClick={this.openMenu}>
                             <MoreVertIcon />
                         </IconButton>
                     </TableCell>
@@ -56,20 +57,10 @@ export default class ProductsListRow extends React.Component {
                     onClose={this.close}
                 >
                     {canUpdate && (
-                        <MenuItem
-                            disabled={isDeleting}
-                            onClick={this.handleEdit}
-                        >
-                            Edit
-                        </MenuItem>
+                        <MenuItem onClick={this.handleUpdate}>Update</MenuItem>
                     )}
                     {canDelete && (
-                        <MenuItem
-                            disabled={isDeleting}
-                            onClick={this.handleDelete}
-                        >
-                            {isDeleting ? "Deleting..." : "Delete"}
-                        </MenuItem>
+                        <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
                     )}
                 </Menu>
             </TableRow>
@@ -82,6 +73,5 @@ ProductsListRow.propTypes = {
     onDelete: PropTypes.func.isRequired,
     canUpdate: PropTypes.bool.isRequired,
     canDelete: PropTypes.bool.isRequired,
-    product: PropTypes.object.isRequired,
-    isDeleting: PropTypes.bool.isRequired
+    product: PropTypes.object.isRequired
 };

@@ -48,15 +48,6 @@ export const productsCreate = product => async dispatch => {
     }
 };
 
-export const productsCreateAndGet = (
-    newProduct,
-    afterCreateCallback
-) => async dispatch => {
-    await dispatch(productsCreate(newProduct));
-    afterCreateCallback();
-    await dispatch(productsGet());
-};
-
 export const PRODUCTS_UPDATE_SUCCESS = "PRODUCTS_UPDATE_SUCCESS";
 export const productsUpdateSuccess = product => ({
     type: PRODUCTS_UPDATE_SUCCESS,
@@ -81,16 +72,6 @@ export const productsUpdate = (productId, updatedProduct) => async dispatch => {
     }
 };
 
-export const productsUpdateAndGet = (
-    productId,
-    updatedProduct,
-    afterUpdateCallback
-) => async dispatch => {
-    await dispatch(productsUpdate(productId, updatedProduct));
-    afterUpdateCallback();
-    await dispatch(productsGet());
-};
-
 export const PRODUCTS_DELETE_SUCCESS = "PRODUCTS_DELETE_SUCCESS";
 export const productsDeleteSuccess = product => ({
     type: PRODUCTS_DELETE_SUCCESS,
@@ -113,13 +94,4 @@ export const productsDelete = product => async dispatch => {
     } catch (error) {
         dispatch(productsDeleteError(product));
     }
-};
-
-export const productsDeleteAndGet = (
-    product,
-    afterDeleteCallback
-) => async dispatch => {
-    await dispatch(productsDelete(product));
-    afterDeleteCallback();
-    await dispatch(productsGet());
 };
